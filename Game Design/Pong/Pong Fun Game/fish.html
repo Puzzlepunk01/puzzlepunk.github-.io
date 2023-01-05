@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Menu </title>
+    <script src="https://simplycodingcourses.com/files/simplyjs/simply.js">
+    </script>
+      function start(){
+        sjs.open();
+
+        //Background Music
+        var PlayM = new Audio('Music/mad_robots.mp3');
+        var toggle = true;
+        var musicOn = false;
+        sjs.keyDown(SPACE_KEY, function (){
+          if(toggle == true){
+            if(musicOn == false){
+              PlayM.play();
+              musicOn = true;
+            } else {
+              playM.pause();
+              musicOn = false;
+            }
+            toggle = false;
+            setTimeout(function(){
+              toggle = true;
+            },1000);
+          } //end if toggle statement
+        }); //end keyDown function
+
+        var menu_text = new sjs.Text("MENU",28,"blue");
+        menu_text.centerH();
+
+        var game_text = new sjs.Text("Use the Arrow Keys to Control the Player. Only eat enimies smaller than you!",28,"#ff0")
+        game_text.centerH().offset(0, 30);
+
+        var startBtn = new sjs.Button("Start", function(){
+          window.location = "fish.html";
+        });
+
+        startBtn.center();
+
+        var info_text = new sjs.Text("Created by Tasha Marason",20,"black");
+
+        var info_text.bottom().centerH();
+
+      } //end start
+
+    </script>
+    </head>
+  </body onload="start()">
+    <h1> Fish </h1>
+
+    <div id="target" style="margin:auto;background:grey;"></div>
+  </body>
+</html>
+
+sjs.onHit("player","enemy", function(x,y){
+  if(x.getWidth() > y.getWidth() &&
+    x.getHeight() > y.getHeight()) {
+    score = score + 1;
+    score_txt.setText("Score: "+score);
+    localStorage.setItem("score", score);
+    x.grow(10,5);
+} else {
+  x.destroy();
+  window.location = "gameover.html";
+}
+ y.destroy();
+});
+
